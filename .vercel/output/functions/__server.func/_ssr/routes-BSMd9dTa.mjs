@@ -1,7 +1,7 @@
 import { r as __toESM } from "../_runtime.mjs";
 import { i as getArchiveYearRange, n as featuredProject, r as formatProjectIndex, t as archiveProjects } from "./projects-BFdlaXuH.mjs";
 import { P as require_react, _ as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-DbbvPyu6.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-BSMd9dTa.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var websiteImageModules = /* #__PURE__ */ Object.assign({
@@ -374,10 +374,6 @@ function ProjectCard({ project, index, onOpen }) {
 					className: "w-full aspect-[4/5] object-cover transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-90"
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 border border-white/0 group-hover:border-primary/30 transition-colors pointer-events-none" }),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-					className: "absolute top-4 left-4 font-mono text-[10px] uppercase tracking-widest text-foreground/70",
-					children: project.file
-				}),
 				project.cardScroll && project.images.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 					className: "absolute bottom-4 right-4 font-mono text-[10px] uppercase tracking-widest text-foreground/50",
 					children: "← scroll →"
@@ -426,8 +422,35 @@ function Index() {
 		className: "min-h-screen bg-background text-foreground font-body selection:bg-primary selection:text-white overflow-x-hidden",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[0.04]",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-[-200%] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] animate-[grain_1s_steps(2)_infinite]" })
+				className: "fixed inset-0 pointer-events-none z-50 overflow-hidden",
+				style: { opacity: .035 },
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+					style: {
+						position: "absolute",
+						inset: "-200%",
+						width: "400%",
+						height: "400%",
+						animation: "grain 1s steps(2) infinite"
+					},
+					xmlns: "http://www.w3.org/2000/svg",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("filter", {
+						id: "grain-filter",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("feTurbulence", {
+							type: "fractalNoise",
+							baseFrequency: "0.65",
+							numOctaves: "3",
+							stitchTiles: "stitch"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("feColorMatrix", {
+							type: "saturate",
+							values: "0"
+						})]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("rect", {
+						width: "100%",
+						height: "100%",
+						filter: "url(#grain-filter)",
+						opacity: "1"
+					})]
+				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
 				className: "sticky top-0 z-40 flex items-center justify-between px-6 py-8 mix-blend-difference",
@@ -475,116 +498,595 @@ function Index() {
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
 				id: "top",
-				className: "relative px-6 pt-12 pb-32 overflow-hidden",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "absolute top-0 left-0 w-full h-full -z-10 opacity-[0.08] pointer-events-none",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-						className: "font-display text-[25vw] leading-[0.8] tracking-tighter uppercase whitespace-nowrap -translate-x-[3%]",
-						children: "Anis Benini"
-					})
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-end",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "md:col-span-7 space-y-8",
+				className: "relative px-6 pt-10 pb-0 overflow-hidden",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("style", { children: `
+          @keyframes scan-beam {
+            0%   { top: -2px; opacity: 0; }
+            5%   { opacity: 1; }
+            95%  { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+          }
+          @keyframes float-a {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            33%       { transform: translateY(-14px) translateX(4px); }
+            66%       { transform: translateY(-6px) translateX(-4px); }
+          }
+          @keyframes float-b {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-10px); }
+          }
+          @keyframes hero-glow {
+            0%, 100% { opacity: 0.06; }
+            50%       { opacity: 0.14; }
+          }
+          @keyframes ring-pulse {
+            0%   { transform: scale(0.8); opacity: 0.4; }
+            100% { transform: scale(2.2); opacity: 0; }
+          }
+          @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+          }
+          @keyframes dash-move {
+            from { stroke-dashoffset: 200; }
+            to   { stroke-dashoffset: 0; }
+          }
+          .hero-scan { position: absolute; left: 0; right: 0; height: 1px; animation: scan-beam 7s linear infinite; background: linear-gradient(90deg, transparent, rgba(235,70,70,0.75), transparent); }
+          .hero-float-a { animation: float-a 9s ease-in-out infinite; }
+          .hero-float-b { animation: float-b 12s ease-in-out infinite; }
+          .hero-glow-pulse { animation: hero-glow 4s ease-in-out infinite; }
+          .hero-ring { animation: ring-pulse 3s ease-out infinite; }
+          .hero-ring-2 { animation: ring-pulse 3s ease-out infinite; animation-delay: 1s; }
+          .hero-ring-3 { animation: ring-pulse 3s ease-out infinite; animation-delay: 2s; }
+          .blink { animation: blink-cursor 1s step-end infinite; }
+          .dash-anim { animation: dash-move 4s linear infinite; stroke-dasharray: 8 6; }
+        ` }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "absolute inset-0 z-0 pointer-events-none overflow-hidden",
 						children: [
-							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted animate-[slide-up_0.8s_var(--ease-cinematic)_both]",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-2 h-2 rounded-full bg-primary animate-pulse" }), "Available for select projects — 2026"]
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "absolute top-0 left-0 w-full h-[60%] select-none pointer-events-none",
+								style: { opacity: .05 },
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+									width: "100%",
+									height: "100%",
+									viewBox: "0 0 1400 300",
+									preserveAspectRatio: "xMinYMid meet",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("text", {
+										x: "0",
+										y: "80%",
+										className: "font-display uppercase",
+										fill: "white",
+										style: {
+											fontSize: "260px",
+											letterSpacing: "-0.06em"
+										},
+										children: "Anis Benini"
+									})
+								})
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
-								className: "font-display text-6xl sm:text-7xl md:text-9xl uppercase leading-[0.85] tracking-tight animate-[slide-up_1s_var(--ease-cinematic)_both]",
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+								className: "absolute inset-0 w-full h-full",
+								style: { opacity: .09 },
+								xmlns: "http://www.w3.org/2000/svg",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("defs", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("pattern", {
+									id: "hero-grid",
+									x: "0",
+									y: "0",
+									width: "60",
+									height: "60",
+									patternUnits: "userSpaceOnUse",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+										d: "M 60 0 L 0 0 0 60",
+										fill: "none",
+										stroke: "white",
+										strokeWidth: "0.6"
+									})
+								}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("rect", {
+									width: "100%",
+									height: "100%",
+									fill: "url(#hero-grid)"
+								})]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								style: {
+									position: "absolute",
+									top: "10px",
+									left: "10px",
+									right: "10px",
+									height: "20px",
+									display: "flex",
+									justifyContent: "space-between",
+									fontFamily: "monospace",
+									fontSize: "8px",
+									color: "rgba(255,255,255,0.25)",
+									letterSpacing: "0.1em"
+								},
+								className: "select-none",
 								children: [
-									"AI Engineer",
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-										className: "text-primary",
-										children: "×"
-									}),
-									" Visual",
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
-									"Engineer"
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "[ SYS_LOC: 36.7118° N, 4.0459° E ]" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "SCALE_FACTOR: 1.0000" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "NAV_SYS_READY" })
 								]
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "max-w-md text-base md:text-lg text-muted font-mono animate-[slide-up_1.2s_0.2s_var(--ease-cinematic)_both]",
-								children: "I build intelligent products and cinematic interfaces — where machine learning, web engineering and art direction collide."
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+								className: "absolute top-[15%] left-[45%] w-[200px] h-[200px]",
+								style: { opacity: .08 },
+								viewBox: "0 0 100 100",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+										cx: "50",
+										cy: "50",
+										r: "40",
+										fill: "none",
+										stroke: "white",
+										strokeWidth: "0.5",
+										strokeDasharray: "3 3"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+										cx: "50",
+										cy: "50",
+										r: "25",
+										fill: "none",
+										stroke: "rgba(235,70,70,0.8)",
+										strokeWidth: "0.5"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+										x1: "50",
+										y1: "0",
+										x2: "50",
+										y2: "100",
+										stroke: "white",
+										strokeWidth: "0.3"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+										x1: "0",
+										y1: "50",
+										x2: "100",
+										y2: "50",
+										stroke: "white",
+										strokeWidth: "0.3"
+									})
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+								className: "absolute top-[60%] left-[8%] w-[120px] h-[120px]",
+								style: { opacity: .06 },
+								viewBox: "0 0 100 100",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+										cx: "50",
+										cy: "50",
+										r: "45",
+										fill: "none",
+										stroke: "white",
+										strokeWidth: "0.4"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+										d: "M 50 5 A 45 45 0 0 1 95 50",
+										fill: "none",
+										stroke: "rgba(235,70,70,0.8)",
+										strokeWidth: "1"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+										x1: "50",
+										y1: "50",
+										x2: "85",
+										y2: "15",
+										stroke: "rgba(235,70,70,0.8)",
+										strokeWidth: "0.6"
+									})
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "hero-scan" }),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+								className: "absolute top-0 left-0 w-[55%] h-[65%]",
+								style: { opacity: .1 },
+								xmlns: "http://www.w3.org/2000/svg",
+								viewBox: "0 0 500 400",
+								preserveAspectRatio: "none",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+										x1: "0",
+										y1: "400",
+										x2: "500",
+										y2: "0",
+										stroke: "white",
+										strokeWidth: "1"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+										x1: "0",
+										y1: "300",
+										x2: "380",
+										y2: "0",
+										stroke: "white",
+										strokeWidth: "0.5",
+										opacity: "0.6"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+										x1: "0",
+										y1: "200",
+										x2: "260",
+										y2: "0",
+										stroke: "white",
+										strokeWidth: "0.3",
+										opacity: "0.4"
+									})
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+								className: "absolute top-0 left-0 w-[50%] h-full",
+								style: { opacity: .13 },
+								xmlns: "http://www.w3.org/2000/svg",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", {
+										className: "dash-anim",
+										points: "30,80 30,160 120,160 120,240 200,240",
+										fill: "none",
+										stroke: "rgba(235,70,70,0.8)",
+										strokeWidth: "1"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+										cx: "200",
+										cy: "240",
+										r: "3",
+										fill: "rgba(235,70,70,0.8)"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", {
+										className: "dash-anim",
+										points: "60,40 60,100 180,100",
+										fill: "none",
+										stroke: "rgba(255,255,255,0.5)",
+										strokeWidth: "0.8",
+										style: { animationDelay: "1.5s" }
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+										cx: "180",
+										cy: "100",
+										r: "2",
+										fill: "rgba(255,255,255,0.5)"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", {
+										className: "dash-anim",
+										points: "10,300 80,300 80,360 150,360",
+										fill: "none",
+										stroke: "rgba(255,255,255,0.35)",
+										strokeWidth: "0.7",
+										style: { animationDelay: "0.8s" }
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", {
+										className: "dash-anim",
+										points: "200,40 200,120 300,120 300,200",
+										fill: "none",
+										stroke: "rgba(235,70,70,0.4)",
+										strokeWidth: "0.8",
+										style: { animationDelay: "2.2s" }
+									})
+								]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "flex gap-4 animate-[slide-up_1.4s_0.3s_var(--ease-cinematic)_both]",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-									href: "#work",
-									className: "group inline-flex items-center gap-3 border border-border px-6 py-3 font-mono text-[11px] uppercase tracking-widest hover:bg-primary hover:border-primary transition-colors",
-									children: ["View Archive", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-										className: "group-hover:translate-x-1 transition-transform",
-										children: "↓"
-									})]
-								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-									href: "https://github.com/AnisBenini/",
-									target: "_blank",
-									rel: "noreferrer",
-									className: "group inline-flex items-center gap-3 px-6 py-3 font-mono text-[11px] uppercase tracking-widest text-muted hover:text-foreground transition-colors",
-									children: ["Github", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-										className: "group-hover:translate-x-1 transition-transform",
-										children: "↗"
-									})]
-								})]
-							})
+								style: {
+									position: "absolute",
+									top: "38%",
+									left: "18%"
+								},
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "hero-ring",
+										style: {
+											position: "absolute",
+											top: -20,
+											left: -20,
+											width: 40,
+											height: 40,
+											borderRadius: "50%",
+											border: "1px solid rgba(235,70,70,0.6)"
+										}
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "hero-ring-2",
+										style: {
+											position: "absolute",
+											top: -20,
+											left: -20,
+											width: 40,
+											height: 40,
+											borderRadius: "50%",
+											border: "1px solid rgba(235,70,70,0.6)"
+										}
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "hero-ring-3",
+										style: {
+											position: "absolute",
+											top: -20,
+											left: -20,
+											width: 40,
+											height: 40,
+											borderRadius: "50%",
+											border: "1px solid rgba(235,70,70,0.6)"
+										}
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: {
+										width: 6,
+										height: 6,
+										borderRadius: "50%",
+										background: "rgba(235,70,70,0.9)"
+									} })
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: {
+								position: "absolute",
+								top: "6%",
+								left: "3%",
+								width: 48,
+								height: 48,
+								borderLeft: "1px solid rgba(255,255,255,0.2)",
+								borderTop: "1px solid rgba(255,255,255,0.2)"
+							} }),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: {
+								position: "absolute",
+								top: "6%",
+								left: "3%",
+								width: 28,
+								height: 28,
+								borderLeft: "1px solid rgba(235,70,70,0.3)",
+								borderTop: "1px solid rgba(235,70,70,0.3)",
+								marginTop: 10,
+								marginLeft: 10
+							} }),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: {
+								position: "absolute",
+								bottom: "12%",
+								right: "45%",
+								width: 36,
+								height: 36,
+								borderRight: "1px solid rgba(255,255,255,0.12)",
+								borderBottom: "1px solid rgba(255,255,255,0.12)"
+							} }),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "hero-float-a",
+								style: {
+									position: "absolute",
+									top: "9%",
+									left: "4%",
+									fontFamily: "monospace",
+									fontSize: 10,
+									textTransform: "uppercase",
+									letterSpacing: "0.2em",
+									color: "rgba(255,255,255,0.28)",
+									lineHeight: 1.9
+								},
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "AI_ENGINEER.TSX" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										style: { color: "rgba(235,70,70,0.6)" },
+										children: "▸ model.train()"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "▸ design.render()" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										style: { color: "rgba(235,70,70,0.6)" },
+										children: ["▸ build.ship()", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+											className: "blink",
+											children: "_"
+										})]
+									})
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "hero-float-b",
+								style: {
+									position: "absolute",
+									top: "24%",
+									left: "28%",
+									fontFamily: "monospace",
+									fontSize: 9,
+									textTransform: "uppercase",
+									letterSpacing: "0.2em",
+									color: "rgba(255,255,255,0.2)",
+									lineHeight: 1.9
+								},
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: ["STATUS: ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										style: { color: "rgba(235,70,70,0.7)" },
+										children: "AVAILABLE"
+									})] }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "LOCATION: ALGERIA" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "YEAR: 2026" })
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "hero-float-a",
+								style: {
+									position: "absolute",
+									bottom: "20%",
+									left: "5%",
+									fontFamily: "monospace",
+									fontSize: 9,
+									textTransform: "uppercase",
+									letterSpacing: "0.15em",
+									color: "rgba(255,255,255,0.15)",
+									lineHeight: 2,
+									animationDelay: "3s"
+								},
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: ["PROJECTS: ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									style: { color: "rgba(235,70,70,0.5)" },
+									children: "18+"
+								})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: ["STACK: ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									style: { color: "rgba(235,70,70,0.5)" },
+									children: "FULL"
+								})] })]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "hero-glow-pulse",
+								style: {
+									position: "absolute",
+									top: 0,
+									left: 0,
+									width: "45%",
+									height: "70%",
+									background: "radial-gradient(ellipse at 25% 35%, rgba(235,70,70,0.08) 0%, transparent 70%)"
+								}
+							}),
+							[
+								{
+									x: "6%",
+									y: "56%",
+									d: "0s"
+								},
+								{
+									x: "14%",
+									y: "67%",
+									d: "1.2s"
+								},
+								{
+									x: "9%",
+									y: "76%",
+									d: "2.1s"
+								},
+								{
+									x: "22%",
+									y: "61%",
+									d: "0.6s"
+								},
+								{
+									x: "33%",
+									y: "72%",
+									d: "1.8s"
+								},
+								{
+									x: "18%",
+									y: "82%",
+									d: "0.9s"
+								},
+								{
+									x: "4%",
+									y: "45%",
+									d: "2.5s"
+								},
+								{
+									x: "38%",
+									y: "55%",
+									d: "1.4s"
+								}
+							].map((dot, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								style: {
+									position: "absolute",
+									left: dot.x,
+									top: dot.y,
+									width: i % 3 === 0 ? 5 : 3,
+									height: i % 3 === 0 ? 5 : 3,
+									borderRadius: "50%",
+									background: i % 3 === 0 ? "rgba(235,70,70,0.55)" : "rgba(255,255,255,0.25)",
+									animationDelay: dot.d
+								},
+								className: "hero-float-b"
+							}, i))
 						]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "md:col-span-5 animate-[shutter-reveal_1.5s_0.3s_var(--ease-cinematic)_both]",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "relative w-full aspect-[4/5] overflow-hidden outline outline-1 -outline-offset-1 outline-white/5 group",
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-end",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "md:col-span-7 space-y-6",
 							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
-									src: featuredProject.thumbnail,
-									alt: `${featuredProject.title} by Anis Benini`,
-									className: "w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" }),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "absolute bottom-4 left-4 right-4 flex justify-between font-mono text-[10px] uppercase tracking-widest text-foreground/80",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: featuredProject.file }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "@ANIS_BENINI" })]
+									className: "flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted animate-[slide-up_0.8s_var(--ease-cinematic)_both]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-2 h-2 rounded-full bg-primary animate-pulse" }), "Available for select projects — 2026"]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
+									className: "font-display text-5xl sm:text-6xl md:text-8xl uppercase leading-[0.85] tracking-tight animate-[slide-up_1s_var(--ease-cinematic)_both]",
+									children: [
+										"AI Engineer",
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+											className: "text-primary",
+											children: "×"
+										}),
+										" Designer"
+									]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "max-w-md text-sm md:text-base text-muted font-mono animate-[slide-up_1.2s_0.2s_var(--ease-cinematic)_both]",
+									children: "Building intelligent products and digital experiences through code, design, and AI."
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "flex gap-4 animate-[slide-up_1.4s_0.3s_var(--ease-cinematic)_both]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
+										href: "#work",
+										className: "group inline-flex items-center gap-3 border border-border px-6 py-3 font-mono text-[11px] uppercase tracking-widest hover:bg-primary hover:border-primary transition-colors",
+										children: ["View Archive", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+											className: "group-hover:translate-x-1 transition-transform",
+											children: "↓"
+										})]
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
+										href: "https://github.com/AnisBenini/",
+										target: "_blank",
+										rel: "noreferrer",
+										className: "group inline-flex items-center gap-3 px-6 py-3 font-mono text-[11px] uppercase tracking-widest text-muted hover:text-foreground transition-colors",
+										children: ["Github", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+											className: "group-hover:translate-x-1 transition-transform",
+											children: "↗"
+										})]
+									})]
 								})
 							]
-						})
-					})]
-				})]
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
-				className: "border-y border-border py-6 overflow-hidden",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "flex whitespace-nowrap animate-[marquee_40s_linear_infinite] gap-16 font-display text-4xl uppercase tracking-tight",
-					children: Array.from({ length: 2 }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex gap-16 shrink-0",
-						children: [
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "AI Engineering" }),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "text-primary",
-								children: "✦"
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Web Development" }),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "text-primary",
-								children: "✦"
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Art Direction" }),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "text-primary",
-								children: "✦"
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Poster Design" }),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "text-primary",
-								children: "✦"
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Brand Identity" }),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "text-primary",
-								children: "✦"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "md:col-span-5 animate-[shutter-reveal_1.5s_0.3s_var(--ease-cinematic)_both]",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "relative w-full aspect-[3/4] md:aspect-[4/5] lg:aspect-[3/4] overflow-hidden outline outline-1 -outline-offset-1 outline-white/5 group",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+										src: featuredProject.thumbnail,
+										alt: `${featuredProject.title} by Anis Benini`,
+										className: "w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "absolute bottom-4 left-4 right-4 flex justify-between font-mono text-[10px] uppercase tracking-widest text-foreground/80",
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "@ANIS_BENINI" })
+									})
+								]
 							})
-						]
-					}, i))
-				})
+						})]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "relative z-10 mt-8 -mx-6 border-t border-border py-5 overflow-hidden",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "flex whitespace-nowrap animate-[marquee_40s_linear_infinite] gap-16 font-display text-3xl md:text-4xl uppercase tracking-tight",
+							children: Array.from({ length: 2 }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex gap-16 shrink-0",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "AI Engineering" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-primary",
+										children: "✦"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Web Development" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-primary",
+										children: "✦"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Art Direction" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-primary",
+										children: "✦"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Poster Design" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-primary",
+										children: "✦"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Brand Identity" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-primary",
+										children: "✦"
+									})
+								]
+							}, i))
+						})
+					})
+				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
 				id: "work",

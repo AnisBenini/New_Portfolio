@@ -147,9 +147,7 @@ function ProjectCard({
           />
         )}
         <div className="absolute inset-0 border border-white/0 group-hover:border-primary/30 transition-colors pointer-events-none" />
-        <span className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-widest text-foreground/70">
-          {project.file}
-        </span>
+
         {project.cardScroll && project.images.length > 1 && (
           <span className="absolute bottom-4 right-4 font-mono text-[10px] uppercase tracking-widest text-foreground/50">
             ← scroll →
@@ -194,9 +192,15 @@ function Index() {
 
   return (
     <main className="min-h-screen bg-background text-foreground font-body selection:bg-primary selection:text-white overflow-x-hidden">
-      {/* Grain overlay */}
-      <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[0.04]">
-        <div className="absolute inset-[-200%] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] animate-[grain_1s_steps(2)_infinite]" />
+      {/* Grain overlay — inline SVG so it works in all browsers */}
+      <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden" style={{ opacity: 0.035 }}>
+        <svg style={{ position: 'absolute', inset: '-200%', width: '400%', height: '400%', animation: 'grain 1s steps(2) infinite' }} xmlns="http://www.w3.org/2000/svg">
+          <filter id="grain-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#grain-filter)" opacity="1" />
+        </svg>
       </div>
 
       {/* Navigation */}
@@ -234,26 +238,176 @@ function Index() {
       </nav>
 
       {/* Hero */}
-      <section id="top" className="relative px-6 pt-12 pb-32 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full -z-10 opacity-[0.08] pointer-events-none">
-          <h1 className="font-display text-[25vw] leading-[0.8] tracking-tighter uppercase whitespace-nowrap -translate-x-[3%]">
-            Anis Benini
-          </h1>
+      <section id="top" className="relative px-6 pt-10 pb-0 overflow-hidden">
+
+        {/* ── Animated background ── */}
+        <style>{`
+          @keyframes scan-beam {
+            0%   { top: -2px; opacity: 0; }
+            5%   { opacity: 1; }
+            95%  { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+          }
+          @keyframes float-a {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            33%       { transform: translateY(-14px) translateX(4px); }
+            66%       { transform: translateY(-6px) translateX(-4px); }
+          }
+          @keyframes float-b {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-10px); }
+          }
+          @keyframes hero-glow {
+            0%, 100% { opacity: 0.06; }
+            50%       { opacity: 0.14; }
+          }
+          @keyframes ring-pulse {
+            0%   { transform: scale(0.8); opacity: 0.4; }
+            100% { transform: scale(2.2); opacity: 0; }
+          }
+          @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+          }
+          @keyframes dash-move {
+            from { stroke-dashoffset: 200; }
+            to   { stroke-dashoffset: 0; }
+          }
+          .hero-scan { position: absolute; left: 0; right: 0; height: 1px; animation: scan-beam 7s linear infinite; background: linear-gradient(90deg, transparent, rgba(235,70,70,0.75), transparent); }
+          .hero-float-a { animation: float-a 9s ease-in-out infinite; }
+          .hero-float-b { animation: float-b 12s ease-in-out infinite; }
+          .hero-glow-pulse { animation: hero-glow 4s ease-in-out infinite; }
+          .hero-ring { animation: ring-pulse 3s ease-out infinite; }
+          .hero-ring-2 { animation: ring-pulse 3s ease-out infinite; animation-delay: 1s; }
+          .hero-ring-3 { animation: ring-pulse 3s ease-out infinite; animation-delay: 2s; }
+          .blink { animation: blink-cursor 1s step-end infinite; }
+          .dash-anim { animation: dash-move 4s linear infinite; stroke-dasharray: 8 6; }
+        `}</style>
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+
+          {/* Ghost watermark — SVG text renders identically in Chrome and Firefox */}
+          <div className="absolute top-0 left-0 w-full h-[60%] select-none pointer-events-none" style={{ opacity: 0.05 }}>
+            <svg width="100%" height="100%" viewBox="0 0 1400 300" preserveAspectRatio="xMinYMid meet">
+              <text x="0" y="60%" className="font-display uppercase" fill="white" style={{ fontSize: "23dvh", letterSpacing: '-0.06em' }}>
+                Anis Benini
+              </text>
+            </svg>
+          </div>
+
+          {/* Grid */}
+          <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.09 }} xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hero-grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.6" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#hero-grid)" />
+          </svg>
+
+          {/* Technical Edge Coordinates & Ticks */}
+          <div style={{ position: 'absolute', top: '10px', left: '10px', right: '10px', height: '20px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '8px', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.1em' }} className="select-none">
+            <span>[ SYS_LOC: 36.7118° N, 4.0459° E ]</span>
+            <span>SCALE_FACTOR: 1.0000</span>
+            <span>NAV_SYS_READY</span>
+          </div>
+
+          {/* Decorative Crosshairs & Radar Arcs */}
+          <svg className="absolute top-[15%] left-[45%] w-[200px] h-[200px]" style={{ opacity: 0.08 }} viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="white" strokeWidth="0.5" strokeDasharray="3 3" />
+            <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(235,70,70,0.8)" strokeWidth="0.5" />
+            <line x1="50" y1="0" x2="50" y2="100" stroke="white" strokeWidth="0.3" />
+            <line x1="0" y1="50" x2="100" y2="50" stroke="white" strokeWidth="0.3" />
+          </svg>
+
+          <svg className="absolute top-[60%] left-[8%] w-[120px] h-[120px]" style={{ opacity: 0.06 }} viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="white" strokeWidth="0.4" />
+            <path d="M 50 5 A 45 45 0 0 1 95 50" fill="none" stroke="rgba(235,70,70,0.8)" strokeWidth="1" />
+            <line x1="50" y1="50" x2="85" y2="15" stroke="rgba(235,70,70,0.8)" strokeWidth="0.6" />
+          </svg>
+
+          {/* Scanning beam */}
+          <div className="hero-scan" />
+
+          {/* Diagonal accent lines */}
+          <svg className="absolute top-0 left-0 w-[55%] h-[65%]" style={{ opacity: 0.1 }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" preserveAspectRatio="none">
+            <line x1="0" y1="400" x2="500" y2="0" stroke="white" strokeWidth="1" />
+            <line x1="0" y1="300" x2="380" y2="0" stroke="white" strokeWidth="0.5" opacity="0.6" />
+            <line x1="0" y1="200" x2="260" y2="0" stroke="white" strokeWidth="0.3" opacity="0.4" />
+          </svg>
+
+          {/* Circuit-board traces — animated dashes */}
+          <svg className="absolute top-0 left-0 w-[50%] h-full" style={{ opacity: 0.13 }} xmlns="http://www.w3.org/2000/svg">
+            <polyline className="dash-anim" points="30,80 30,160 120,160 120,240 200,240" fill="none" stroke="rgba(235,70,70,0.8)" strokeWidth="1" />
+            <circle cx="200" cy="240" r="3" fill="rgba(235,70,70,0.8)" />
+            <polyline className="dash-anim" points="60,40 60,100 180,100" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="0.8" style={{ animationDelay: '1.5s' }} />
+            <circle cx="180" cy="100" r="2" fill="rgba(255,255,255,0.5)" />
+            <polyline className="dash-anim" points="10,300 80,300 80,360 150,360" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="0.7" style={{ animationDelay: '0.8s' }} />
+            <polyline className="dash-anim" points="200,40 200,120 300,120 300,200" fill="none" stroke="rgba(235,70,70,0.4)" strokeWidth="0.8" style={{ animationDelay: '2.2s' }} />
+          </svg>
+
+
+          {/* Pulsing ring origin point */}
+          <div style={{ position: 'absolute', top: '38%', left: '18%' }}>
+            <div className="hero-ring" style={{ position: 'absolute', top: -20, left: -20, width: 40, height: 40, borderRadius: '50%', border: '1px solid rgba(235,70,70,0.6)' }} />
+            <div className="hero-ring-2" style={{ position: 'absolute', top: -20, left: -20, width: 40, height: 40, borderRadius: '50%', border: '1px solid rgba(235,70,70,0.6)' }} />
+            <div className="hero-ring-3" style={{ position: 'absolute', top: -20, left: -20, width: 40, height: 40, borderRadius: '50%', border: '1px solid rgba(235,70,70,0.6)' }} />
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(235,70,70,0.9)' }} />
+          </div>
+
+          {/* Corner bracket — top left */}
+          <div style={{ position: 'absolute', top: '6%', left: '3%', width: 48, height: 48, borderLeft: '1px solid rgba(255,255,255,0.2)', borderTop: '1px solid rgba(255,255,255,0.2)' }} />
+          <div style={{ position: 'absolute', top: '6%', left: '3%', width: 28, height: 28, borderLeft: '1px solid rgba(235,70,70,0.3)', borderTop: '1px solid rgba(235,70,70,0.3)', marginTop: 10, marginLeft: 10 }} />
+
+          {/* Bottom-right corner bracket */}
+          <div style={{ position: 'absolute', bottom: '12%', right: '45%', width: 36, height: 36, borderRight: '1px solid rgba(255,255,255,0.12)', borderBottom: '1px solid rgba(255,255,255,0.12)' }} />
+
+          {/* Data glyphs */}
+          <div className="hero-float-a" style={{ position: 'absolute', top: '9%', left: '4%', fontFamily: 'monospace', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.28)', lineHeight: 1.9 }}>
+            <div>AI_ENGINEER.TSX</div>
+            <div style={{ color: 'rgba(235,70,70,0.6)' }}>▸ model.train()</div>
+            <div>▸ design.render()</div>
+            <div style={{ color: 'rgba(235,70,70,0.6)' }}>▸ build.ship()<span className="blink">_</span></div>
+          </div>
+
+          <div className="hero-float-b" style={{ position: 'absolute', top: '24%', left: '28%', fontFamily: 'monospace', fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.2)', lineHeight: 1.9 }}>
+            <div>STATUS: <span style={{ color: 'rgba(235,70,70,0.7)' }}>AVAILABLE</span></div>
+            <div>LOCATION: ALGERIA</div>
+            <div>YEAR: 2026</div>
+          </div>
+
+          {/* Extra data cluster bottom-left */}
+          <div className="hero-float-a" style={{ position: 'absolute', bottom: '20%', left: '5%', fontFamily: 'monospace', fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.15)', lineHeight: 2, animationDelay: '3s' }}>
+            <div>PROJECTS: <span style={{ color: 'rgba(235,70,70,0.5)' }}>18+</span></div>
+            <div>STACK: <span style={{ color: 'rgba(235,70,70,0.5)' }}>FULL</span></div>
+          </div>
+
+          {/* Radial red glow */}
+          <div className="hero-glow-pulse" style={{ position: 'absolute', top: 0, left: 0, width: '45%', height: '70%', background: 'radial-gradient(ellipse at 25% 35%, rgba(235,70,70,0.08) 0%, transparent 70%)' }} />
+
+          {/* Floating dots */}
+          {([{ x: '6%', y: '56%', d: '0s' }, { x: '14%', y: '67%', d: '1.2s' }, { x: '9%', y: '76%', d: '2.1s' }, { x: '22%', y: '61%', d: '0.6s' }, { x: '33%', y: '72%', d: '1.8s' }, { x: '18%', y: '82%', d: '0.9s' }, { x: '4%', y: '45%', d: '2.5s' }, { x: '38%', y: '55%', d: '1.4s' }] as const).map((dot, i) => (
+            <div key={i} style={{ position: 'absolute', left: dot.x, top: dot.y, width: i % 3 === 0 ? 5 : 3, height: i % 3 === 0 ? 5 : 3, borderRadius: '50%', background: i % 3 === 0 ? 'rgba(235,70,70,0.55)' : 'rgba(255,255,255,0.25)', animationDelay: dot.d }} className="hero-float-b" />
+          ))}
         </div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-end">
-          <div className="md:col-span-7 space-y-8">
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
+          <div className="md:col-span-7 space-y-6">
             <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted animate-[slide-up_0.8s_var(--ease-cinematic)_both]">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Available for select projects — 2026
             </div>
-            <h2 className="font-display text-6xl sm:text-7xl md:text-9xl uppercase leading-[0.85] tracking-tight animate-[slide-up_1s_var(--ease-cinematic)_both]">
-              AI Engineer<br />
-              <span className="text-primary">×</span> Visual<br />
-              Engineer
+            <h2 className="font-display text-5xl sm:text-6xl md:text-9xl uppercase leading-[0.88] tracking-tight animate-[slide-up_1s_var(--ease-cinematic)_both]">
+              AI Engineer
+              <br />
+              <span className="text-primary">×</span>{" "}
+              <span className="inline-block scale-x-110 origin-left">
+                Designer
+              </span>
+
             </h2>
-            <p className="max-w-md text-base md:text-lg text-muted font-mono animate-[slide-up_1.2s_0.2s_var(--ease-cinematic)_both]">
-              I build intelligent products and cinematic interfaces — where machine learning, web engineering and art direction collide.
+
+            <p className="max-w-md text-sm md:text-base text-muted font-mono animate-[slide-up_1.2s_0.2s_var(--ease-cinematic)_both]">
+              Building intelligent products and digital experiences through code, design, and AI.
             </p>
             <div className="flex gap-4 animate-[slide-up_1.4s_0.3s_var(--ease-cinematic)_both]">
               <a href="#work" className="group inline-flex items-center gap-3 border border-border px-6 py-3 font-mono text-[11px] uppercase tracking-widest hover:bg-primary hover:border-primary transition-colors">
@@ -268,30 +422,29 @@ function Index() {
           </div>
 
           <div className="md:col-span-5 animate-[shutter-reveal_1.5s_0.3s_var(--ease-cinematic)_both]">
-            <div className="relative w-full aspect-[4/5] overflow-hidden outline outline-1 -outline-offset-1 outline-white/5 group">
+            <div className="relative w-full aspect-[3/4] md:aspect-[4/5] lg:aspect-[3/4] overflow-hidden outline outline-1 -outline-offset-1 outline-white/5 group">
               <img src={featuredProject.thumbnail} alt={`${featuredProject.title} by Anis Benini`} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" />
               <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 flex justify-between font-mono text-[10px] uppercase tracking-widest text-foreground/80">
-                <span>{featuredProject.file}</span>
                 <span>@ANIS_BENINI</span>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Marquee */}
-      <section className="border-y border-border py-6 overflow-hidden">
-        <div className="flex whitespace-nowrap animate-[marquee_40s_linear_infinite] gap-16 font-display text-4xl uppercase tracking-tight">
-          {Array.from({ length: 2 }).map((_, i) => (
-            <div key={i} className="flex gap-16 shrink-0">
-              <span>AI Engineering</span><span className="text-primary">✦</span>
-              <span>Web Development</span><span className="text-primary">✦</span>
-              <span>Art Direction</span><span className="text-primary">✦</span>
-              <span>Poster Design</span><span className="text-primary">✦</span>
-              <span>Brand Identity</span><span className="text-primary">✦</span>
-            </div>
-          ))}
+        {/* Marquee — pulled into the hero so it's always in view */}
+        <div className="relative z-10 mt-8 -mx-6 border-t border-border py-5 overflow-hidden">
+          <div className="flex whitespace-nowrap animate-[marquee_40s_linear_infinite] gap-16 font-display text-3xl md:text-4xl uppercase tracking-tight">
+            {Array.from({ length: 2 }).map((_, i) => (
+              <div key={i} className="flex gap-16 shrink-0">
+                <span>AI Engineering</span><span className="text-primary">✦</span>
+                <span>Web Development</span><span className="text-primary">✦</span>
+                <span>Art Direction</span><span className="text-primary">✦</span>
+                <span>Poster Design</span><span className="text-primary">✦</span>
+                <span>Brand Identity</span><span className="text-primary">✦</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -425,7 +578,7 @@ function Index() {
           </div>
         </div>
       </section>
-      
+
 
       {/* Education */}
       <section id="experience" className="px-6 py-32 border-t border-border reveal-on-scroll">

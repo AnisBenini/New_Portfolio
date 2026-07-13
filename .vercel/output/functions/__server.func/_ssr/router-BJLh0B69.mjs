@@ -1,8 +1,8 @@
 import { n as featuredProject } from "./projects-BFdlaXuH.mjs";
 import { _ as require_jsx_runtime, c as HeadContent, d as Outlet, f as lazyRouteComponent, g as useRouter, h as Link, m as createRootRoute, p as createFileRoute, s as Scripts, u as createRouter } from "../_libs/@tanstack/react-router+[...].mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-CsXsLXpB.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-BJLh0B69.js
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-CMYX7O7s.css";
+var styles_default = "/assets/styles-CiRA13-T.css";
 function NotFoundComponent() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: "flex min-h-screen items-center justify-center bg-background px-4",
@@ -145,7 +145,7 @@ function RootShell({ children }) {
 function RootComponent() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {});
 }
-var $$splitComponentImporter = () => import("./routes-DbbvPyu6.mjs");
+var $$splitComponentImporter = () => import("./routes-BSMd9dTa.mjs");
 var rootRouteChildren = { IndexRoute: createFileRoute("/")({
 	component: lazyRouteComponent($$splitComponentImporter, "component"),
 	head: () => ({ meta: [{
